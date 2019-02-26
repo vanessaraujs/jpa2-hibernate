@@ -6,20 +6,17 @@ import javax.persistence.Persistence;
 
 import hibernate.domains.Pessoa;
 
-public class Find {
+public class Delete {
 
 	public static void main(String[] args) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-hibernate");
 		EntityManager em = emf.createEntityManager();
-
-		Pessoa pessoa = em.find(Pessoa.class, 5L);
-
-		if (pessoa != null) {
-			System.out.println("\nNome: " + pessoa.getNome() + "\n" + "Idade: " + pessoa.getIdade());
-		} else {
-			System.out.println("Pessoa não encontrada.");
-		}
-
+		
+		Pessoa pessoa = em.find(Pessoa.class, 1L);
+		em.getTransaction().begin();
+		em.remove(pessoa);
+		em.getTransaction().commit();
+		
+		System.out.println("Pessoa removida com sucesso");
 	}
-
 }
